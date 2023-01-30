@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:p="http://www.springframework.org/schema/p"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+           http://www.springframework.org/schema/util
+           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+<!-- creating beans -->
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		name="ds">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://127.0.0.1:3308/springJdbcCompany" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean class="org.springframework.jdbc.core.JdbcTemplate"
+		name="jdbcTemplateObject">
+		<property name="dataSource">
+			<ref bean="ds" />
+		</property>
+	</bean>
+	
+	<!-- creating dao beans -->
+	<bean class="com.crudOperation.EmployeeDaoImpl" name="emp">
+	<property name="jt">
+	<ref bean="jdbcTemplateObject"/>
+	</property>
+	</bean>
+	<bean class="com.crudOperation.DepartmentDaoImpl" name="dep">
+	<property name="temp">
+	<ref bean="jdbcTemplateObject"/>
+	</property>
+	</bean>
+	
+
+</beans>
